@@ -12,7 +12,6 @@ catch (Exception $e){
     die('Erreur : ' .$e->getMessage());
 }
 //---------------------------------------------------------------------------------------
-echo "Exercice Gaulois PDO<br><br>1. Afficher la liste des gaulois avec nom du personnage, spécialité et lieu d'habitation (de la table lieu)<br><br>";
     
     $sqlQuery1 = //On déclare notre requête SQL dans une variable
         "SELECT nom_personnage, specialite.nom_specialite, lieu.nom_lieu FROM personnage
@@ -26,22 +25,22 @@ echo "Exercice Gaulois PDO<br><br>1. Afficher la liste des gaulois avec nom du p
                 //FetchAll = quand la requête SQL renvoie plusieurs lignes
     $gaulois = $personnageGaulois->fetchAll();
 
-    echo "<table cellpadding=2 cellspacing=2 style='text-align : center'>
+    echo "<table cellpadding=2 cellspacing=2>
             <tr>
-                <td>Nom</td>
-                <td>Lieu</td>
-                <td>Specialite</td>
+                <th>Nom</th>
+                <th>Lieu</th>
+                <th>Spécialité</th>
             </tr>";
 
     foreach($gaulois as $perso){
-        echo  "<table cellpadding=2 cellspacing=2>
-                <td>".$perso['nom_personnage']."</td>
-                <td>".$perso['nom_lieu']."</td>
-                <td>".$perso['nom_specialite']."</td>
-            </table>";
-}
+        echo  "<tr style='border:1px solid black'>
+                <td style='border:1px solid black'>".$perso['nom_personnage']."</td>
+                <td style='border:1px solid black'>".$perso['nom_lieu']."</td>
+                <td style='border:1px solid black'>".$perso['nom_specialite']."</td>
+            </td>";
+} "</table><br>";
+
 //----------------------------------------------------------------------------------------
-    echo "<br>2. Afficher la liste des spécialités : nom de la spécialité et nombre de gaulois par spécialité<br><br>";
 
     $sqlQuery2 = 
         "SELECT nom_specialite, COUNT(personnage.id_personnage) AS 'nb_persos' FROM specialite
@@ -53,16 +52,20 @@ echo "Exercice Gaulois PDO<br><br>1. Afficher la liste des gaulois avec nom du p
     $specaliteGaulois->execute();
     $gaulois2 = $specaliteGaulois->fetchAll();
 
+    echo "<table cellpadding=2 cellspacing=2>
+            <tr>
+                <th>Spécialité</th>
+                <th>Nombe de personnage</th>
+            </tr>";
+
     foreach($gaulois2 as $specialite){
-        echo "<table cellpadding=2 cellspacing=2>
-                <td>".$specialite['nom_specialite']."</td>
-                <td>".$specialite['nb_persos']."</td>
-            <table>";
-    }
+        echo "<tr>
+                <td style='border:1px solid black'>".$specialite['nom_specialite']."</td>
+                <td style='border:1px solid black'>".$specialite['nb_persos']."</td>";
+    } "</table><br>";
 
 //------------------------------------------------------------------------------------------
 
-    echo "<br>3. Afficher la liste des potions : nom de la potion et nombre d'ingrédients de la potion<br><br>";
 
     $sqlQuery3 = 
         "SELECT potion.nom_potion, COUNT(ingredient.id_ingredient) AS 'nb_ingredients' FROM potion
@@ -75,10 +78,16 @@ echo "Exercice Gaulois PDO<br><br>1. Afficher la liste des gaulois avec nom du p
     $potionGaulois->execute();
     $gaulois3 = $potionGaulois->fetchAll();
 
+    echo "<table cellpadding=2 cellspacing=2>
+            <tr>
+                <th>Potion</th>
+                <th>Nombre d'ingrédients</th>
+            </tr>";
+
     foreach($gaulois3 as $potion){
-        echo "<table cellpadding=2 cellspacing=2>
-                <td>".$potion['nom_potion']."</td>
-                <td>".$potion['nb_ingredients']."</td>
-            </table>";
-    }
+        echo "<tr>
+                <td style='border:1px solid black'>".$potion['nom_potion']."</td>
+                <td style='border:1px solid black'>".$potion['nb_ingredients']."</td>
+            </tr>";
+    } "</table><br>";
 ?>
